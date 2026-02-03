@@ -97,7 +97,7 @@ export default function App() {
     }
   }, [selectedLocation, selectedActivity, isSpinning]);
 
-  // Fetch weather and places after result is shown and location is outdoor
+  // Fetch places first, then weather at the destination (not current location)
   useEffect(() => {
     if (!showResult || !selectedLocation || !selectedActivity) return;
     if (!selectedLocation.outdoor) return;
@@ -105,9 +105,9 @@ export default function App() {
     let cancelled = false;
 
     async function fetchData() {
-      let coords;
+      let userCoords;
       try {
-        coords = await getUserLocation();
+        userCoords = await getUserLocation();
       } catch {
         // GPS denied or unavailable — skip weather and places
         return;
@@ -115,30 +115,41 @@ export default function App() {
 
       if (cancelled) return;
 
-      // Fetch weather
-      try {
-        const w = await fetchWeather(coords.lat, coords.lon);
-        if (!cancelled) setWeather(w);
-      } catch {
-        // Weather fetch failed — continue without it
-      }
+      // Fetch nearby places first (if location has an OSM tag)
+      let weatherLat = userCoords.lat;
+      let weatherLon = userCoords.lon;
 
-      // Fetch nearby places if location has an OSM tag
       if (selectedLocation.osmTag) {
         if (!cancelled) setPlacesLoading(true);
         try {
           const radiusKm = getSearchRadiusKm(timeHours);
           const p = await fetchNearbyPlaces(
-            coords.lat,
-            coords.lon,
+            userCoords.lat,
+            userCoords.lon,
             selectedLocation.osmTag,
             radiusKm,
           );
           if (!cancelled) setPlaces(p);
+
+          // Use the first suggested place's coordinates for weather
+          if (p && p.length > 0 && p[0].lat != null && p[0].lon != null) {
+            weatherLat = p[0].lat;
+            weatherLon = p[0].lon;
+          }
         } catch {
           // Places fetch failed — continue without it
         }
         if (!cancelled) setPlacesLoading(false);
+      }
+
+      if (cancelled) return;
+
+      // Fetch weather at the destination (or user location as fallback)
+      try {
+        const w = await fetchWeather(weatherLat, weatherLon);
+        if (!cancelled) setWeather(w);
+      } catch {
+        // Weather fetch failed — continue without it
       }
     }
 

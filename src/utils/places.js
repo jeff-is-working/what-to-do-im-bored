@@ -59,6 +59,8 @@ export async function fetchNearbyPlaces(lat, lon, osmTag, radiusKm) {
 
       return {
         name,
+        lat: elLat,
+        lon: elLon,
         distKm,
         distLabel: formatDistance(distKm),
       };

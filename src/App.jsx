@@ -37,7 +37,7 @@ export default function App() {
   const timeHours = sliderToHours(sliderValue);
 
   const filteredActivities = useMemo(() => {
-    return activities.filter((a) => a.minHours <= timeHours);
+    return activities.filter((a) => a.minHours <= timeHours && timeHours <= a.maxHours);
   }, [timeHours]);
 
   const handleSpin = useCallback(() => {

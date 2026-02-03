@@ -28,11 +28,21 @@
 }
 
 .place-suggestions-item {
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.place-suggestions-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: #f8f9fa;
+  text-decoration: none;
+  color: inherit;
+}
+
+.place-suggestions-link:active {
+  background: #e9ecef;
   border-radius: 10px;
 }
 

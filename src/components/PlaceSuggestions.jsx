@@ -17,8 +17,15 @@ export default function PlaceSuggestions({ places, loading }) {
       <ul className="place-suggestions-list">
         {places.map((place, i) => (
           <li key={i} className="place-suggestions-item">
-            <span className="place-suggestions-name">{place.name}</span>
-            <span className="place-suggestions-distance">{place.distLabel}</span>
+            <a
+              className="place-suggestions-link"
+              href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lon}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="place-suggestions-name">{place.name}</span>
+              <span className="place-suggestions-distance">{place.distLabel}</span>
+            </a>
           </li>
         ))}
       </ul>

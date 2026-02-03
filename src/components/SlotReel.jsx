@@ -1,13 +1,14 @@
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import './SlotReel.css';
 
 const ITEM_HEIGHT = 80;
 
 export default function SlotReel({ items, spinning, onSpinComplete, label, duration = 3 }) {
   const stripRef = useRef(null);
-  const [currentOffset, setCurrentOffset] = useState(0);
   const targetIndexRef = useRef(0);
   const isAnimatingRef = useRef(false);
+  const currentOffsetRef = useRef(0);
+  const prevSpinningRef = useRef(false);
 
   const totalItems = items.length;
 
@@ -23,16 +24,20 @@ export default function SlotReel({ items, spinning, onSpinComplete, label, durat
     const resetOffset = (totalItems + targetIndex) * ITEM_HEIGHT;
     strip.style.transition = 'none';
     strip.style.transform = `translateY(-${resetOffset}px)`;
-    setCurrentOffset(resetOffset);
+    currentOffsetRef.current = resetOffset;
 
-    // Force reflow before allowing future transitions
+    // Force reflow so the reset is committed before anything else
     strip.offsetHeight;
 
     onSpinComplete(items[targetIndex]);
   }, [items, totalItems, onSpinComplete]);
 
+  // Detect spinning going from false → true (edge trigger, not level trigger)
   useEffect(() => {
-    if (!spinning || items.length === 0) return;
+    const wasSpinning = prevSpinningRef.current;
+    prevSpinningRef.current = spinning;
+
+    if (!spinning || wasSpinning || items.length === 0) return;
 
     const strip = stripRef.current;
     if (!strip) return;
@@ -43,25 +48,40 @@ export default function SlotReel({ items, spinning, onSpinComplete, label, durat
     const targetIndex = Math.floor(Math.random() * totalItems);
     targetIndexRef.current = targetIndex;
 
-    // Calculate destination: scroll through 2-3 full rotations + land on target in middle copy
-    const fullRotations = 3;
-    const destination = (totalItems * fullRotations + totalItems + targetIndex) * ITEM_HEIGHT;
+    // Ensure we have a valid starting position (middle copy, first item)
+    if (currentOffsetRef.current === 0) {
+      const startOffset = totalItems * ITEM_HEIGHT;
+      strip.style.transition = 'none';
+      strip.style.transform = `translateY(-${startOffset}px)`;
+      currentOffsetRef.current = startOffset;
+    }
 
-    // Small delay to ensure any reset has painted
+    // Force reflow to commit the starting position
+    strip.offsetHeight;
+
+    // Calculate destination: scroll through 3 full rotations + land on target in middle copy
+    const fullRotations = 3;
+    const destination =
+      currentOffsetRef.current + (totalItems * fullRotations + targetIndex) * ITEM_HEIGHT;
+
+    // Double rAF to guarantee the browser has painted the start position
     requestAnimationFrame(() => {
-      strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.35, 1)`;
-      strip.style.transform = `translateY(-${destination}px)`;
+      requestAnimationFrame(() => {
+        if (!strip) return;
+        strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.35, 1)`;
+        strip.style.transform = `translateY(-${destination}px)`;
+      });
     });
   }, [spinning, items, totalItems, duration]);
 
-  // Reset position when items change (e.g., filter update)
+  // Set initial position on mount and when items change (filter update)
   useEffect(() => {
     const strip = stripRef.current;
     if (!strip || isAnimatingRef.current) return;
-    const resetOffset = totalItems * ITEM_HEIGHT; // Start at middle copy, first item
+    const startOffset = totalItems * ITEM_HEIGHT;
     strip.style.transition = 'none';
-    strip.style.transform = `translateY(-${resetOffset}px)`;
-    setCurrentOffset(resetOffset);
+    strip.style.transform = `translateY(-${startOffset}px)`;
+    currentOffsetRef.current = startOffset;
   }, [items, totalItems]);
 
   // Repeat items 3x for seamless looping

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { locations } from './data/locations.js';
 import { activities } from './data/activities.js';
 import { sliderToHours } from './utils/formatDuration.js';
@@ -15,7 +15,8 @@ export default function App() {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [movieTitle, setMovieTitle] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [spinKey, setSpinKey] = useState(0);
+
+  const reelsCompletedRef = useRef(0);
 
   const timeHours = sliderToHours(sliderValue);
 
@@ -23,27 +24,26 @@ export default function App() {
     return activities.filter((a) => a.minHours <= timeHours);
   }, [timeHours]);
 
-  // Track which reels have completed
-  const [reelsCompleted, setReelsCompleted] = useState(0);
-
   const handleSpin = useCallback(() => {
     setIsSpinning(true);
     setShowResult(false);
     setSelectedLocation(null);
     setSelectedActivity(null);
     setMovieTitle(null);
-    setReelsCompleted(0);
-    setSpinKey((k) => k + 1);
+    reelsCompletedRef.current = 0;
+  }, []);
+
+  const finishIfBothDone = useCallback(() => {
+    reelsCompletedRef.current += 1;
+    if (reelsCompletedRef.current >= 2) {
+      setIsSpinning(false);
+    }
   }, []);
 
   const handleLocationComplete = useCallback((location) => {
     setSelectedLocation(location);
-    setReelsCompleted((c) => {
-      const next = c + 1;
-      if (next >= 2) setIsSpinning(false);
-      return next;
-    });
-  }, []);
+    finishIfBothDone();
+  }, [finishIfBothDone]);
 
   const handleActivityComplete = useCallback(
     (activity) => {
@@ -52,27 +52,18 @@ export default function App() {
         const movies = activity.movieSuggestions;
         setMovieTitle(movies[Math.floor(Math.random() * movies.length)]);
       }
-      setReelsCompleted((c) => {
-        const next = c + 1;
-        if (next >= 2) setIsSpinning(false);
-        return next;
-      });
+      finishIfBothDone();
     },
-    [],
+    [finishIfBothDone],
   );
 
-  // Show result once both reels are done
-  const resultReady = selectedLocation && selectedActivity && !isSpinning;
-
-  // Delay result display slightly for dramatic effect
-  useState(() => {
-    // not used as hook, just initialize
-  });
-
-  // Use effect-like pattern: show result when spinning stops
-  if (resultReady && !showResult) {
-    setTimeout(() => setShowResult(true), 200);
-  }
+  // Show result card after spinning stops and both results are in
+  useEffect(() => {
+    if (selectedLocation && selectedActivity && !isSpinning) {
+      const timer = setTimeout(() => setShowResult(true), 250);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedLocation, selectedActivity, isSpinning]);
 
   return (
     <div className="app">
@@ -85,7 +76,6 @@ export default function App() {
 
       <div className="reels-container">
         <SlotReel
-          key={`where-${spinKey}`}
           items={locations}
           spinning={isSpinning}
           onSpinComplete={handleLocationComplete}
@@ -93,7 +83,6 @@ export default function App() {
           duration={2.5}
         />
         <SlotReel
-          key={`what-${spinKey}`}
           items={filteredActivities}
           spinning={isSpinning}
           onSpinComplete={handleActivityComplete}

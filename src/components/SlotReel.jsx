@@ -3,7 +3,7 @@ import './SlotReel.css';
 
 const ITEM_HEIGHT = 80;
 
-export default function SlotReel({ items, spinning, onSpinComplete, label, duration = 3 }) {
+export default function SlotReel({ items, spinning, targetItem, onSpinComplete, label, duration = 3 }) {
   const stripRef = useRef(null);
   const targetIndexRef = useRef(0);
   const isAnimatingRef = useRef(false);
@@ -44,8 +44,14 @@ export default function SlotReel({ items, spinning, onSpinComplete, label, durat
 
     isAnimatingRef.current = true;
 
-    // Pick random target
-    const targetIndex = Math.floor(Math.random() * totalItems);
+    // Use pre-determined target if provided, otherwise pick random
+    let targetIndex;
+    if (targetItem) {
+      targetIndex = items.findIndex((it) => it.id === targetItem.id);
+      if (targetIndex === -1) targetIndex = Math.floor(Math.random() * totalItems);
+    } else {
+      targetIndex = Math.floor(Math.random() * totalItems);
+    }
     targetIndexRef.current = targetIndex;
 
     // Ensure we have a valid starting position (middle copy, first item)

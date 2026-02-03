@@ -8,6 +8,10 @@ import SpinButton from './components/SpinButton.jsx';
 import ResultCard from './components/ResultCard.jsx';
 import ShareButton from './components/ShareButton.jsx';
 
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 export default function App() {
   const [sliderValue, setSliderValue] = useState(4); // Default: ~6 hours
   const [isSpinning, setIsSpinning] = useState(false);
@@ -15,6 +19,10 @@ export default function App() {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [movieTitle, setMovieTitle] = useState(null);
   const [showResult, setShowResult] = useState(false);
+
+  // Pre-determined targets for the current spin
+  const [targetActivity, setTargetActivity] = useState(null);
+  const [targetLocation, setTargetLocation] = useState(null);
 
   const reelsCompletedRef = useRef(0);
 
@@ -25,13 +33,30 @@ export default function App() {
   }, [timeHours]);
 
   const handleSpin = useCallback(() => {
-    setIsSpinning(true);
+    if (filteredActivities.length === 0) return;
+
+    // Pick activity first, then a compatible location
+    const activity = pickRandom(filteredActivities);
+    const validLocs = locations.filter((loc) =>
+      activity.validLocations.includes(loc.id)
+    );
+    const location = validLocs.length > 0 ? pickRandom(validLocs) : pickRandom(locations);
+
+    setTargetActivity(activity);
+    setTargetLocation(location);
     setShowResult(false);
     setSelectedLocation(null);
     setSelectedActivity(null);
     setMovieTitle(null);
     reelsCompletedRef.current = 0;
-  }, []);
+
+    // Pre-compute movie title if applicable
+    if (activity.movieSuggestions) {
+      setMovieTitle(pickRandom(activity.movieSuggestions));
+    }
+
+    setIsSpinning(true);
+  }, [filteredActivities]);
 
   const finishIfBothDone = useCallback(() => {
     reelsCompletedRef.current += 1;
@@ -48,10 +73,6 @@ export default function App() {
   const handleActivityComplete = useCallback(
     (activity) => {
       setSelectedActivity(activity);
-      if (activity.movieSuggestions) {
-        const movies = activity.movieSuggestions;
-        setMovieTitle(movies[Math.floor(Math.random() * movies.length)]);
-      }
       finishIfBothDone();
     },
     [finishIfBothDone],
@@ -78,6 +99,7 @@ export default function App() {
         <SlotReel
           items={locations}
           spinning={isSpinning}
+          targetItem={targetLocation}
           onSpinComplete={handleLocationComplete}
           label="WHERE"
           duration={2.5}
@@ -85,6 +107,7 @@ export default function App() {
         <SlotReel
           items={filteredActivities}
           spinning={isSpinning}
+          targetItem={targetActivity}
           onSpinComplete={handleActivityComplete}
           label="WHAT"
           duration={3.2}

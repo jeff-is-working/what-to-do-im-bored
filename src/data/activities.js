@@ -6,6 +6,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 3,
     involvesBernie: true,
+    validLocations: ['park', 'beach', 'backyard', 'downtown', 'trails', 'lake', 'mountains', 'farmersmarket'],
   },
   {
     id: 'camping',
@@ -14,6 +15,7 @@ export const activities = [
     minHours: 24,
     maxHours: 168,
     involvesBernie: true,
+    validLocations: ['beach', 'campsite', 'mountains', 'lake'],
   },
   {
     id: 'movie',
@@ -22,6 +24,7 @@ export const activities = [
     minHours: 1.5,
     maxHours: 3,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'friends'],
     movieSuggestions: [
       'The Grand Budapest Hotel',
       'Spirited Away',
@@ -52,6 +55,7 @@ export const activities = [
     minHours: 1,
     maxHours: 3,
     involvesBernie: false,
+    validLocations: ['downtown', 'cafe', 'friends', 'mall', 'farmersmarket'],
   },
   {
     id: 'longdrive',
@@ -60,6 +64,7 @@ export const activities = [
     minHours: 2,
     maxHours: 8,
     involvesBernie: true,
+    validLocations: ['car', 'beach', 'mountains', 'lake'],
   },
   {
     id: 'boardgame',
@@ -68,6 +73,7 @@ export const activities = [
     minHours: 1,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'friends', 'cafe'],
   },
   {
     id: 'build',
@@ -76,6 +82,7 @@ export const activities = [
     minHours: 2,
     maxHours: 24,
     involvesBernie: false,
+    validLocations: ['home', 'workshop', 'backyard'],
   },
   {
     id: 'bake',
@@ -84,6 +91,7 @@ export const activities = [
     minHours: 1.5,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['home', 'kitchen', 'friends'],
   },
   {
     id: 'paint',
@@ -92,6 +100,7 @@ export const activities = [
     minHours: 1,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'park', 'backyard', 'friends', 'cafe'],
   },
   {
     id: 'photowalk',
@@ -100,6 +109,7 @@ export const activities = [
     minHours: 1,
     maxHours: 3,
     involvesBernie: true,
+    validLocations: ['park', 'beach', 'downtown', 'trails', 'lake', 'mountains', 'farmersmarket'],
   },
   {
     id: 'picnic',
@@ -108,6 +118,7 @@ export const activities = [
     minHours: 1,
     maxHours: 4,
     involvesBernie: true,
+    validLocations: ['park', 'beach', 'backyard', 'lake', 'mountains', 'trails'],
   },
   {
     id: 'stargaze',
@@ -116,6 +127,7 @@ export const activities = [
     minHours: 1,
     maxHours: 3,
     involvesBernie: true,
+    validLocations: ['backyard', 'beach', 'campsite', 'mountains', 'lake'],
   },
   {
     id: 'newrecipe',
@@ -124,6 +136,7 @@ export const activities = [
     minHours: 1.5,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['home', 'kitchen', 'friends'],
   },
   {
     id: 'puzzle',
@@ -132,6 +145,7 @@ export const activities = [
     minHours: 1,
     maxHours: 6,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'friends', 'cafe'],
   },
   {
     id: 'garden',
@@ -140,6 +154,7 @@ export const activities = [
     minHours: 1,
     maxHours: 6,
     involvesBernie: true,
+    validLocations: ['home', 'backyard'],
   },
   {
     id: 'bikeride',
@@ -148,6 +163,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['park', 'downtown', 'trails', 'beach', 'lake', 'mountains'],
   },
   {
     id: 'scrapbook',
@@ -156,6 +172,7 @@ export const activities = [
     minHours: 1,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'friends', 'cafe'],
   },
   {
     id: 'tiedye',
@@ -164,6 +181,7 @@ export const activities = [
     minHours: 2,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['home', 'backyard', 'friends'],
   },
   {
     id: 'kite',
@@ -172,6 +190,7 @@ export const activities = [
     minHours: 1,
     maxHours: 3,
     involvesBernie: true,
+    validLocations: ['park', 'beach', 'backyard', 'lake'],
   },
   {
     id: 'karaoke',
@@ -180,6 +199,7 @@ export const activities = [
     minHours: 1,
     maxHours: 3,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'friends', 'downtown'],
   },
   {
     id: 'yoga',
@@ -188,6 +208,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 1.5,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'park', 'backyard', 'beach'],
   },
   {
     id: 'letters',
@@ -196,6 +217,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 2,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'cafe', 'park'],
   },
   {
     id: 'fort',
@@ -204,6 +226,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 2,
     involvesBernie: true,
+    validLocations: ['home', 'livingroom'],
   },
   {
     id: 'cards',
@@ -212,6 +235,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 3,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'friends', 'cafe', 'park'],
   },
   {
     id: 'bernietrick',
@@ -220,6 +244,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 1.5,
     involvesBernie: true,
+    validLocations: ['home', 'backyard', 'park', 'livingroom'],
   },
   {
     id: 'fetch',
@@ -228,6 +253,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 1.5,
     involvesBernie: true,
+    validLocations: ['park', 'backyard', 'beach', 'lake'],
   },
   {
     id: 'dogpark',
@@ -236,6 +262,7 @@ export const activities = [
     minHours: 1,
     maxHours: 2,
     involvesBernie: true,
+    validLocations: ['park'],
   },
   {
     id: 'fancydinner',
@@ -244,6 +271,7 @@ export const activities = [
     minHours: 2,
     maxHours: 5,
     involvesBernie: false,
+    validLocations: ['home', 'kitchen', 'friends'],
   },
   {
     id: 'pottery',
@@ -252,6 +280,7 @@ export const activities = [
     minHours: 1.5,
     maxHours: 4,
     involvesBernie: false,
+    validLocations: ['home', 'workshop', 'friends'],
   },
   {
     id: 'candles',
@@ -260,6 +289,7 @@ export const activities = [
     minHours: 1.5,
     maxHours: 3,
     involvesBernie: false,
+    validLocations: ['home', 'kitchen', 'friends', 'workshop'],
   },
   {
     id: 'sunset',
@@ -268,6 +298,7 @@ export const activities = [
     minHours: 0.5,
     maxHours: 1.5,
     involvesBernie: true,
+    validLocations: ['beach', 'backyard', 'mountains', 'lake', 'trails', 'park'],
   },
   {
     id: 'geocaching',
@@ -276,6 +307,7 @@ export const activities = [
     minHours: 1,
     maxHours: 4,
     involvesBernie: true,
+    validLocations: ['park', 'trails', 'downtown', 'mountains', 'lake', 'beach'],
   },
   {
     id: 'volunteer',
@@ -284,6 +316,7 @@ export const activities = [
     minHours: 2,
     maxHours: 6,
     involvesBernie: false,
+    validLocations: ['downtown', 'park', 'friends'],
   },
   {
     id: 'art',
@@ -292,5 +325,6 @@ export const activities = [
     minHours: 1,
     maxHours: 6,
     involvesBernie: false,
+    validLocations: ['home', 'livingroom', 'workshop', 'friends', 'cafe', 'backyard'],
   },
 ];

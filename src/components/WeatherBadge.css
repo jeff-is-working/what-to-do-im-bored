@@ -1,0 +1,42 @@
+.weather-badge {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.weather-badge-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f0f4ff;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.weather-badge-emoji {
+  font-size: 1.3rem;
+}
+
+.weather-badge-temp {
+  font-weight: 800;
+  color: var(--accent-blue);
+}
+
+.weather-badge-desc {
+  color: #636e72;
+}
+
+.weather-badge-warning {
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: #fff3cd;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #856404;
+  text-align: center;
+  line-height: 1.4;
+}

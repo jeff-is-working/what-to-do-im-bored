@@ -2,6 +2,9 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { locations } from './data/locations.js';
 import { activities } from './data/activities.js';
 import { sliderToHours } from './utils/formatDuration.js';
+import { getUserLocation, getSearchRadiusKm } from './utils/geo.js';
+import { fetchWeather } from './utils/weather.js';
+import { fetchNearbyPlaces } from './utils/places.js';
 import TimeSlider from './components/TimeSlider.jsx';
 import SlotReel from './components/SlotReel.jsx';
 import SpinButton from './components/SpinButton.jsx';
@@ -23,6 +26,11 @@ export default function App() {
   // Pre-determined targets for the current spin
   const [targetActivity, setTargetActivity] = useState(null);
   const [targetLocation, setTargetLocation] = useState(null);
+
+  // Weather and places state
+  const [weather, setWeather] = useState(null);
+  const [places, setPlaces] = useState(null);
+  const [placesLoading, setPlacesLoading] = useState(false);
 
   const reelsCompletedRef = useRef(0);
 
@@ -48,6 +56,9 @@ export default function App() {
     setSelectedLocation(null);
     setSelectedActivity(null);
     setMovieTitle(null);
+    setWeather(null);
+    setPlaces(null);
+    setPlacesLoading(false);
     reelsCompletedRef.current = 0;
 
     // Pre-compute movie title if applicable
@@ -85,6 +96,58 @@ export default function App() {
       return () => clearTimeout(timer);
     }
   }, [selectedLocation, selectedActivity, isSpinning]);
+
+  // Fetch weather and places after result is shown and location is outdoor
+  useEffect(() => {
+    if (!showResult || !selectedLocation || !selectedActivity) return;
+    if (!selectedLocation.outdoor) return;
+
+    let cancelled = false;
+
+    async function fetchData() {
+      let coords;
+      try {
+        coords = await getUserLocation();
+      } catch {
+        // GPS denied or unavailable — skip weather and places
+        return;
+      }
+
+      if (cancelled) return;
+
+      // Fetch weather
+      try {
+        const w = await fetchWeather(coords.lat, coords.lon);
+        if (!cancelled) setWeather(w);
+      } catch {
+        // Weather fetch failed — continue without it
+      }
+
+      // Fetch nearby places if location has an OSM tag
+      if (selectedLocation.osmTag) {
+        if (!cancelled) setPlacesLoading(true);
+        try {
+          const radiusKm = getSearchRadiusKm(timeHours);
+          const p = await fetchNearbyPlaces(
+            coords.lat,
+            coords.lon,
+            selectedLocation.osmTag,
+            radiusKm,
+          );
+          if (!cancelled) setPlaces(p);
+        } catch {
+          // Places fetch failed — continue without it
+        }
+        if (!cancelled) setPlacesLoading(false);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [showResult, selectedLocation, selectedActivity, timeHours]);
 
   return (
     <div className="app">
@@ -125,6 +188,9 @@ export default function App() {
             activity={selectedActivity}
             location={selectedLocation}
             movieTitle={movieTitle}
+            weather={weather}
+            places={places}
+            placesLoading={placesLoading}
           />
           <ShareButton
             activity={selectedActivity}

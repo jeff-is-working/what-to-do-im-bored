@@ -1,6 +1,8 @@
+import WeatherBadge from './WeatherBadge.jsx';
+import PlaceSuggestions from './PlaceSuggestions.jsx';
 import './ResultCard.css';
 
-export default function ResultCard({ activity, location, movieTitle }) {
+export default function ResultCard({ activity, location, movieTitle, weather, places, placesLoading }) {
   if (!activity || !location) return null;
 
   return (
@@ -22,6 +24,8 @@ export default function ResultCard({ activity, location, movieTitle }) {
           {'🐾'} Bring Bernie along!
         </p>
       )}
+      <WeatherBadge weather={weather} isOutdoor={location.outdoor} />
+      <PlaceSuggestions places={places} loading={placesLoading} />
     </div>
   );
 }

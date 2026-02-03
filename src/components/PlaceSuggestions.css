@@ -1,0 +1,54 @@
+.place-suggestions {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.place-suggestions-loading {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #636e72;
+  font-style: italic;
+}
+
+.place-suggestions-header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #636e72;
+  margin-bottom: 6px;
+}
+
+.place-suggestions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.place-suggestions-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.place-suggestions-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.place-suggestions-distance {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  flex-shrink: 0;
+}

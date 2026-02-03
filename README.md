@@ -1,4 +1,4 @@
-# What To Do I'm Bored
+# What To Do, I'm Bored
 
 A slot-machine-style activity picker to help you and your partner choose something fun to do — sometimes with your puppy Bernie.
 

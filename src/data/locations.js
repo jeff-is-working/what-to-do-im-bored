@@ -1,10 +1,10 @@
 export const locations = [
   { id: 'home', label: 'At Home', emoji: '\u{1F3E0}', outdoor: false, osmTag: null },
   { id: 'park', label: 'In the Park', emoji: '\u{1F333}', outdoor: true, osmTag: 'leisure=park' },
-  { id: 'car', label: 'In the Car', emoji: '\u{1F697}', outdoor: true, osmTag: null },
+  { id: 'car', label: 'In the Car', emoji: '\u{1F697}', outdoor: true, osmTag: 'tourism=viewpoint' },
   { id: 'beach', label: 'At the Beach', emoji: '\u{1F3D6}\uFE0F', outdoor: true, osmTag: 'natural=beach' },
   { id: 'backyard', label: 'In the Backyard', emoji: '\u{1F33F}', outdoor: true, osmTag: null },
-  { id: 'downtown', label: 'Downtown', emoji: '\u{1F3D9}\uFE0F', outdoor: true, osmTag: null },
+  { id: 'downtown', label: 'Downtown', emoji: '\u{1F3D9}\uFE0F', outdoor: true, osmTag: 'tourism=attraction' },
   { id: 'cafe', label: 'At a Caf\u00E9', emoji: '\u2615', outdoor: true, osmTag: 'amenity=cafe' },
   { id: 'trails', label: 'On a Trail', emoji: '\u{1F97E}', outdoor: true, osmTag: 'route=hiking' },
   { id: 'lake', label: 'At the Lake', emoji: '\u{1F30A}', outdoor: true, osmTag: 'natural=water' },
@@ -15,6 +15,6 @@ export const locations = [
   { id: 'kitchen', label: 'In the Kitchen', emoji: '\u{1F373}', outdoor: false, osmTag: null },
   { id: 'workshop', label: 'In the Garage', emoji: '\u{1F527}', outdoor: false, osmTag: null },
   { id: 'livingroom', label: 'In the Living Room', emoji: '\u{1F6CB}\uFE0F', outdoor: false, osmTag: null },
-  { id: 'mountains', label: 'In the Mountains', emoji: '\u26F0\uFE0F', outdoor: true, osmTag: null },
+  { id: 'mountains', label: 'In the Mountains', emoji: '\u26F0\uFE0F', outdoor: true, osmTag: 'natural=peak' },
   { id: 'farmersmarket', label: 'Farmers Market', emoji: '\u{1F96C}', outdoor: true, osmTag: 'amenity=marketplace' },
 ];

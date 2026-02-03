@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#ef476f">
+  <!-- Main pad -->
+  <ellipse cx="50" cy="65" rx="22" ry="18"/>
+  <!-- Toe pads -->
+  <ellipse cx="30" cy="38" rx="10" ry="12" transform="rotate(-15 30 38)"/>
+  <ellipse cx="70" cy="38" rx="10" ry="12" transform="rotate(15 70 38)"/>
+  <ellipse cx="45" cy="30" rx="9" ry="11" transform="rotate(-5 45 30)"/>
+  <ellipse cx="55" cy="30" rx="9" ry="11" transform="rotate(5 55 30)"/>
+</svg>

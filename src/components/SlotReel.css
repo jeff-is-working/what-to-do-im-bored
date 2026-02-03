@@ -1,0 +1,72 @@
+.slot-reel {
+  width: 100%;
+  max-width: 340px;
+}
+
+.slot-reel-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.slot-reel-viewport {
+  height: 80px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 3px solid var(--accent-yellow);
+  background: var(--card-bg);
+  position: relative;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.slot-reel-strip {
+  will-change: transform;
+}
+
+.slot-reel-item {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 16px;
+  user-select: none;
+}
+
+.slot-reel-emoji {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.slot-reel-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slot-reel-fade-top,
+.slot-reel-fade-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.slot-reel-fade-top {
+  top: 0;
+  background: linear-gradient(to bottom, var(--card-bg), transparent);
+}
+
+.slot-reel-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, var(--card-bg), transparent);
+}

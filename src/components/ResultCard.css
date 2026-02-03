@@ -1,0 +1,50 @@
+.result-card {
+  width: 100%;
+  max-width: 340px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.result-card-emojis {
+  font-size: 2.4rem;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.result-card-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.result-card-movie {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.result-card-bernie {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: var(--accent-pink);
+  font-weight: 700;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

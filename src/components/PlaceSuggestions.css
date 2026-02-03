@@ -62,3 +62,10 @@
   color: var(--accent-blue);
   flex-shrink: 0;
 }
+
+.place-suggestions-disclaimer {
+  font-size: 0.65rem;
+  color: #999;
+  text-align: center;
+  margin-top: 6px;
+}

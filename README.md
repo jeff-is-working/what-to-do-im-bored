@@ -41,6 +41,10 @@ npm run build    # Production build
 npm run deploy   # Build and deploy to GitHub Pages
 ```
 
+## Disclaimer
+
+Suggested locations are sourced from [OpenStreetMap](https://www.openstreetmap.org/) via the Overpass API and are not controlled by the I'm Bored team. Please verify destinations independently before visiting.
+
 ## Tech
 
 React + Vite, plain CSS, deployed to GitHub Pages via gh-pages.

@@ -29,6 +29,9 @@ export default function PlaceSuggestions({ places, loading }) {
           </li>
         ))}
       </ul>
+      <p className="place-suggestions-disclaimer">
+        Suggested locations are sourced from OpenStreetMap and are not controlled by the I'm Bored team.
+      </p>
     </div>
   );
 }
